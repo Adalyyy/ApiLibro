@@ -15,23 +15,22 @@ class LibroController extends Controller
 
     public function store(Request $request){
         $validated = $request->validate([
-            'titulo' => 'required|string|max:255',      // Título obligatorio
-            'autor' => 'required|string|max:255',       // Autor obligatorio
-            'genero' => 'nullable|string|max:255',      // Género opcional
+            'titulo' => 'required|string|max:255',
+            'autor' => 'required|string|max:255',
+            'genero' => 'nullable|string|max:255',
             'anio_publicacion' => 'nullable|integer',
         ]);
 
         $libro = Libro::create($validated);
-
         return response()->json($libro, 201);
     }
 
-    public function show($id){
+    public function show(string $id){
         $libro = Libro::findOrFail($id);
         return response()->json($libro, 200);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, string $id){
         $libro = Libro::findOrFail($id);
 
         $validated = $request->validate([
@@ -42,11 +41,10 @@ class LibroController extends Controller
         ]);
 
         $libro->update($validated);
-
         return response()->json($libro, 200);
     }
 
-    public function destroy($id){
+    public function destroy(string $id){
         $libro = Libro::findOrFail($id);
         $libro->delete();
         return response()->json(null, 204);
